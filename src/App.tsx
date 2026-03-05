@@ -225,29 +225,31 @@ function SnipPage() {
       ) : (
         <>
           {/* Header */}
-          <header className="relative flex items-center justify-between gap-3 px-6 py-4">
-            <div className="flex items-center gap-3">
+          <header className="relative flex min-h-14 items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-6 sm:py-4">
+            <div className="flex min-w-0 shrink items-center gap-2 sm:gap-3">
               <img
                 src="/koneksi-logo.png"
                 alt="KonekSnip"
-                className="h-12 w-12 object-contain"
+                className="h-10 w-10 shrink-0 object-contain sm:h-12 sm:w-12"
               />
-              <span className="cursor-pointer text-2xl font-bold tracking-tight text-white">
+              <span className=" truncate text-xl font-bold tracking-tight text-white sm:text-2xl">
                 Konek<span className="text-sky-400">Snip</span>
               </span>
             </div>
-            <div className="relative flex items-center gap-1">
+            <div className="relative flex shrink-0 items-center gap-0.5 sm:gap-1">
               <div className="relative">
                 <Button
                   variant="ghost"
+                  size="sm"
                   onClick={() => {
                     setSetupOpen(!setupOpen);
                     if (historyOpen) setHistoryOpen(false);
                   }}
-                  className="gap-2 text-white/70 hover:bg-white/10 hover:text-white"
+                  className="gap-1.5 text-white/70 hover:bg-white/10 hover:text-white sm:gap-2"
+                  title="Record Video"
                 >
                   <Video className="size-5" />
-                  Record Video
+                  <span className="hidden sm:inline">Record Video</span>
                 </Button>
                 {setupOpen && (
                   <RecordingSetup
@@ -258,14 +260,16 @@ function SnipPage() {
               </div>
               <Button
                 variant="ghost"
+                size="sm"
                 onClick={() => {
                   setHistoryOpen(!historyOpen);
                   if (setupOpen) setSetupOpen(false);
                 }}
-                className="gap-2 text-white/70 hover:bg-white/10 hover:text-white"
+                className="gap-1.5 text-white/70 hover:bg-white/10 hover:text-white sm:gap-2"
+                title="History"
               >
                 <HistoryIcon className="size-5" />
-                History
+                <span className="hidden sm:inline">History</span>
               </Button>
               {historyOpen && (
                 <>
@@ -299,18 +303,34 @@ function SnipPage() {
               <>
                 {/* Hero area */}
                 <div className="mb-6 text-center">
-                  <h1 className="mb-3 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+                  <h1 className="mb-3 text-3xl font-bold tracking-tight text-white sm:text-5xl">
                     Konek<span className="text-sky-400">Snip</span>
                   </h1>
-                  <p className="text-lg text-white/50">
-                    Paste, drop, or pick a file — get a link to share in
-                    seconds.
+                  <p className="text-base text-white/50 sm:text-lg">
+                    Paste a screenshot, record a video, or pick a file — get a
+                    link to share in seconds.
                   </p>
                 </div>
 
-                {/* Upload instructions */}
-                <div className="w-full max-w-xl rounded-2xl border border-white/6 bg-[#2a2a3a] p-8 shadow-xl">
-                  <p className="text-center text-base text-white/80">
+                {/* Upload instructions — mobile: tap to pick; desktop: paste, drag, pick */}
+                <div className="w-full max-w-xl rounded-2xl border border-white/6 bg-[#2a2a3a] p-6 shadow-xl sm:p-8">
+                  {/* Mobile: no paste, emphasize tap to pick */}
+                  <div className="sm:hidden">
+                    <p className="mb-4 text-center text-sm text-white/80">
+                      Tap below to choose a screenshot or image from your
+                      device, or drag and drop onto this page.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-sky-400/40 bg-sky-500/10 py-4 text-base font-medium text-sky-300 transition-colors active:bg-sky-500/20"
+                    >
+                      <Upload className="size-5" />
+                      Pick a file
+                    </button>
+                  </div>
+                  {/* Desktop: paste, drag, pick */}
+                  <p className="hidden text-center text-base text-white/80 sm:block">
                     Paste from your clipboard (
                     {isMac ? (
                       <>
@@ -341,7 +361,7 @@ function SnipPage() {
           </main>
 
           {/* Footer */}
-          <footer className="px-6 py-4 text-center text-xs text-white/50">
+          <footer className="px-4 py-4 text-center text-xs text-white/50 sm:px-6">
             Powered by{" "}
             <a
               href="https://koneksi.co.kr"

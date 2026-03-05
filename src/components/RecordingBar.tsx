@@ -47,7 +47,7 @@ export function RecordingBar({
   const seconds = (remainingSeconds % 60).toString().padStart(2, "0");
 
   return (
-    <div className="fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-[#1e1e2e]/95 px-5 py-2.5 shadow-2xl backdrop-blur-md">
+    <div className="fixed bottom-6 left-1/2 z-50 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-[#1e1e2e]/95 px-3 py-2 shadow-2xl backdrop-blur-md sm:bottom-8 sm:gap-3 sm:px-5 sm:py-2.5">
       <div className="flex items-center gap-2">
         <Circle
           className={`size-3 fill-red-500 text-red-500 ${!isPaused ? "animate-pulse" : "opacity-50"}`}

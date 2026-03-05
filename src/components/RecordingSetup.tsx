@@ -65,7 +65,7 @@ export function RecordingSetup({
   return (
     <>
       <div className="fixed inset-0 z-20" aria-hidden onClick={onClose} />
-      <div className="absolute right-0 top-full z-30 mt-2 w-72 rounded-xl border border-white/10 bg-[#2a2a3a] p-4 shadow-2xl">
+      <div className="absolute -right-11 sm:right-0 top-full z-30 mt-2 w-[calc(100vw-2rem)] max-w-[320px]  rounded-xl border border-white/10 bg-[#2a2a3a] p-4 shadow-2xl">
         <div className="mb-4 space-y-0.5">
           <ToggleRow
             icon={Mic}
@@ -120,7 +120,11 @@ function ToggleRow({
       <div className="relative flex items-center justify-center">
         <Icon
           className={`size-4 transition-colors ${
-            hasLevel ? "text-emerald-400" : active ? "text-white/80" : "text-white/40"
+            hasLevel
+              ? "text-emerald-400"
+              : active
+                ? "text-white/80"
+                : "text-white/40"
           }`}
         />
         {hasLevel && (

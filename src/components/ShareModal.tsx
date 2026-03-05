@@ -46,7 +46,7 @@ export function ShareModal({ fileId, fileName, onClose }: ShareModalProps) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative mx-4 w-full max-w-lg rounded-xl border border-white/10 bg-[#2a2a3a] p-6 shadow-2xl">
+      <div className="relative mx-4 w-full max-w-lg rounded-xl border border-white/10 bg-[#2a2a3a] p-4 shadow-2xl sm:p-6">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-md p-1 text-white/50 transition-colors hover:bg-white/10 hover:text-white"
@@ -66,17 +66,17 @@ export function ShareModal({ fileId, fileName, onClose }: ShareModalProps) {
           uploaded. Share the link below.
         </p>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <input
             ref={inputRef}
             readOnly
             value={shareUrl}
-            className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/90 outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/30"
+            className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white/90 outline-none focus:border-sky-500/50 focus:ring-1 focus:ring-sky-500/30"
             onFocus={(e) => e.target.select()}
           />
           <Button
             onClick={handleCopy}
-            className="shrink-0 gap-1.5 bg-sky-600 text-white hover:bg-sky-500"
+            className="w-full shrink-0 gap-1.5 bg-sky-600 text-white hover:bg-sky-500 sm:w-auto"
           >
             {copied ? (
               <>
