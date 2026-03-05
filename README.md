@@ -5,7 +5,7 @@ Share screenshots and screen recordings instantly. Paste, drop, or pick a file �
 ## How it works
 
 - **Images:** Upload a screenshot or image (paste from clipboard, drag and drop, or pick from your device). The file is sent to the Koneksi API and stored; you get a shareable link right away.
-- **Screen recording:** Choose “Record Video,” pick a screen or tab (with optional system audio and microphone), then a short countdown runs before capture starts. Recordings are limited to 2 minutes and auto-upload when you stop. You can cancel to discard without uploading.
+- **Screen recording:** Choose “Screen Recording,” pick a screen or tab (with optional system audio and microphone), then a short countdown runs before capture starts. Recordings are limited to 2 minutes and auto-upload when you stop. You can cancel to discard without uploading.
 
 ## Features
 

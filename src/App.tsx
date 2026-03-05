@@ -246,10 +246,10 @@ function SnipPage() {
                     if (historyOpen) setHistoryOpen(false);
                   }}
                   className="gap-1.5 text-white/70 hover:bg-white/10 hover:text-white sm:gap-2"
-                  title="Record Video"
+                  title="Screen Recording"
                 >
                   <Video className="size-5" />
-                  <span className="hidden sm:inline">Record Video</span>
+                  <span className="hidden sm:inline">Screen Recording</span>
                 </Button>
                 {setupOpen && (
                   <RecordingSetup
