@@ -1,4 +1,4 @@
-/** Common generic names from clipboard/screenshot that we want to replace. */
+/** Common generic names from clipboard/screenshot/recording that we want to replace. */
 const GENERIC_PATTERNS = [
   /^image$/i,
   /^image\.(png|jpe?g|gif|webp)$/i,
@@ -6,6 +6,8 @@ const GENERIC_PATTERNS = [
   /^paste\.(png|jpe?g|gif|webp)$/i,
   /^blob$/i,
   /^download(\.\w+)?$/i,
+  /^video\.(webm|mp4|mov|ogg)$/i,
+  /^recording\.(webm|mp4|mov|ogg)$/i,
 ];
 
 function isGenericName(name: string): boolean {
@@ -24,8 +26,15 @@ function getExtensionFromMime(mime: string): string {
     "image/jpeg": "jpg",
     "image/gif": "gif",
     "image/webp": "webp",
+    "video/webm": "webm",
+    "video/mp4": "mp4",
+    "video/quicktime": "mov",
+    "video/ogg": "ogg",
   };
-  return map[mime] ?? "png";
+  if (map[mime]) return map[mime];
+  if (mime.startsWith("image/")) return "png";
+  if (mime.startsWith("video/")) return "webm";
+  return "bin";
 }
 
 function formatDateTime(d: Date): string {
@@ -40,7 +49,8 @@ function formatDateTime(d: Date): string {
 
 /**
  * Returns a File with a clearer name when the original is generic
- * (e.g. "image.png" → "Screenshot 2025-03-05 14-30-22.png").
+ * (e.g. "image.png" → "Screenshot 2025-03-05 14-30-22.png",
+ * "video.webm" → "Video 2025-03-05 14-30-22.webm").
  */
 export function ensureFileDisplayName(file: File): File {
   const name = file.name?.trim() || "";
@@ -48,6 +58,7 @@ export function ensureFileDisplayName(file: File): File {
 
   const ext =
     getExtension(name) || getExtensionFromMime(file.type || "image/png");
-  const newName = `Screenshot ${formatDateTime(new Date())}.${ext}`;
+  const prefix = file.type.startsWith("video/") ? "Video" : "Screenshot";
+  const newName = `${prefix} ${formatDateTime(new Date())}.${ext}`;
   return new File([file], newName, { type: file.type });
 }

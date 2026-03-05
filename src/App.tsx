@@ -9,6 +9,11 @@ import { UploadHistory } from "@/components/UploadHistory";
 import { RecordingSetup } from "@/components/RecordingSetup";
 import { RecordingBar } from "@/components/RecordingBar";
 import { ensureFileDisplayName } from "@/lib/file-name";
+import {
+  isAcceptedUploadType,
+  isWithinUploadSizeLimit,
+  MAX_UPLOAD_MB,
+} from "@/lib/upload";
 import { Upload, Loader2, HistoryIcon, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
@@ -52,7 +57,13 @@ function SnipPage() {
 
   const handleFile = useCallback(
     (file: File) => {
-      if (!file.type.startsWith("image/")) return;
+      if (!isAcceptedUploadType(file)) return;
+      if (!isWithinUploadSizeLimit(file)) {
+        toast.error("File too large", {
+          description: `Maximum upload size is ${MAX_UPLOAD_MB} MB.`,
+        });
+        return;
+      }
 
       reset();
       setUploadedFile(null);
@@ -69,7 +80,7 @@ function SnipPage() {
       const files = e.clipboardData?.files;
       if (!files?.length) return;
       for (const f of Array.from(files)) {
-        if (f.type.startsWith("image/")) {
+        if (isAcceptedUploadType(f)) {
           e.preventDefault();
           handleFile(f);
           return;
@@ -107,7 +118,7 @@ function SnipPage() {
     const files = e.dataTransfer.files;
     if (!files.length) return;
     for (const f of Array.from(files)) {
-      if (f.type.startsWith("image/")) {
+      if (isAcceptedUploadType(f)) {
         handleFile(f);
         return;
       }
@@ -307,7 +318,7 @@ function SnipPage() {
                     Konek<span className="text-sky-400">Snip</span>
                   </h1>
                   <p className="text-base text-white/50 sm:text-lg">
-                    Paste a screenshot, record a video, or pick a file — get a
+                    Paste a screenshot, record your screen, or pick a file — get a
                     link to share in seconds.
                   </p>
                 </div>
@@ -380,7 +391,7 @@ function SnipPage() {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/*,video/*"
         className="hidden"
         onChange={onFileInput}
       />
