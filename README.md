@@ -1,73 +1,105 @@
-# React + TypeScript + Vite
+# KonekSnip
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Share screenshots and screen recordings instantly. Paste, drop, or pick a file — get a link to share in seconds. Powered by [Koneksi](https://koneksi.co.kr) (privatized, decentralized storage on IPFS).
 
-Currently, two official plugins are available:
+## How it works
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Images:** Upload a screenshot or image (paste from clipboard, drag and drop, or pick from your device). The file is sent to the Koneksi API and stored; you get a shareable link right away.
+- **Screen recording:** Choose “Record Video,” pick a screen or tab (with optional system audio and microphone), then a short countdown runs before capture starts. Recordings are limited to 2 minutes and auto-upload when you stop. You can cancel to discard without uploading.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Quick upload** — Paste (desktop: Ctrl/Cmd + V), drag and drop, or tap “Pick a file” to upload screenshots and images
+- **Screen recording** — Record a window or tab with optional microphone; 2-minute max, 3-second countdown after selecting the source
+- **Share links** — Every upload returns a link you can copy or open; share modal with one-click copy
+- **Upload history** — See recent uploads, copy links, open in new tab, or remove from history
+- **Mobile-friendly** — Responsive layout; on mobile, “Pick a file” is the main action (no paste shortcut)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Node.js 18+** (recommended: use [nvm](https://github.com/nvm-sh/nvm))
+- **pnpm** (or npm / yarn)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Setup
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. **Clone the repository**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   git clone https://github.com/koneksi-tech/koneksi-snip-poc.git
+   cd koneksi-snip-poc
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. **Install dependencies**
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+   ```bash
+   pnpm install
+   ```
+
+3. **Configure environment**
+
+   Copy the example env file and fill in your [Koneksi](https://koneksi.co.kr) API credentials:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit `.env` and set:
+   - `VITE_KONEKSI_API_URL` — Koneksi API base URL
+   - `VITE_KONEKSI_WEBAPP_URL` — Web app URL (for share links)
+   - `VITE_KONEKSI_CLIENT_ID`
+   - `VITE_KONEKSI_CLIENT_SECRET`
+   - `VITE_KONEKSI_DIRECTORY_ID`
+
+You can get Koneksi Client ID & Secret here: https://koneksi-1.gitbook.io/docs/developer-tools/quick-start
+
+4. **Run locally**
+
+   ```bash
+   pnpm dev
+   ```
+
+   Open the URL shown in the terminal (e.g. `http://localhost:5173`).
+
+5. **Build for production**
+
+   ```bash
+   pnpm build
+   pnpm preview
+   ```
+
+## Contributing
+
+We welcome contributions. Here’s a simple workflow:
+
+1. **Fork** this repository and clone your fork.
+2. **Create a branch** for your change:
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+   Use a clear branch name (e.g. `fix/mobile-layout`, `feat/recording-options`).
+3. **Make your changes** — keep the code style consistent and add or update tests if relevant.
+4. **Run checks:**
+   ```bash
+   pnpm lint
+   pnpm build
+   ```
+5. **Commit** with a clear message (e.g. “Add mobile upload CTA”, “Fix history panel overflow”).
+6. **Push** to your fork and open a **Pull Request** against the default branch of this repo. Describe what you changed and why.
+7. **Address review** — maintainers may ask for updates; we’ll merge once everything looks good.
+
+If you’re unsure what to work on, check open issues or start a discussion. Please follow the project’s code of conduct and be respectful in issues and PRs.
+
+## Tech stack
+
+- **React 19** + **TypeScript** + **Vite**
+- **Tailwind CSS** (v4) for styling
+- **Zustand** for state (upload, recording)
+- **TanStack Query** for upload mutation
+- **Sonner** for toasts
+- **Radix**-based UI primitives
+
+## License
+
+See the [LICENSE](LICENSE) file in this repository.
