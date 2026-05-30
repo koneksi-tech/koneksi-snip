@@ -5,6 +5,7 @@ import {
   clearUploadHistory,
   type StoredUpload,
 } from "@/lib/upload-history";
+import { getShareUrl } from "@/api/services/files";
 import { Copy, Check, ExternalLink, ImageIcon, Trash2, X } from "lucide-react";
 
 interface UploadHistoryProps {
@@ -37,10 +38,11 @@ function HistoryItem({
   onCopy: () => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const shareUrl = getShareUrl(item.file_id);
 
   async function handleCopy() {
     try {
-      await navigator.clipboard.writeText(item.share_url);
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       onCopy();
@@ -77,7 +79,7 @@ function HistoryItem({
           )}
         </Button>
         <a
-          href={item.share_url}
+          href={shareUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-md p-1.5 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
