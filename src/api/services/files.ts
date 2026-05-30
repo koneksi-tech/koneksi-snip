@@ -13,7 +13,7 @@ export async function uploadFile(file: File): Promise<FileRecord> {
   form.append("is_public", "true");
 
   const { data } = await api.post<SingleFileUploadResponse>(
-    "/clients/v1/files",
+    "/clients/v1/files/upload",
     form,
   );
 

@@ -1,4 +1,4 @@
-// ─── Single file upload (POST /clients/v1/files) ─────────────
+// ─── Single file upload (POST /clients/v1/files/upload) ──────
 
 export interface SingleFileUploadData {
   file_id: string;
